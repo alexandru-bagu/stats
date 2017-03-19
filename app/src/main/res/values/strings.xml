@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Overwatch Statistics</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
+</resources>

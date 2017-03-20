@@ -39,6 +39,20 @@ public class SearchActivity extends AppCompatActivity {
         String battleTag = et.getText().toString();
         battleTag = battleTag.replace('#','-');
         intent.putExtra("battleTag", battleTag);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == resultCode) {
+            String battleTag = data.getStringExtra("battleTag");
+            StatsProvider instance = StatsProvider.getInstance();
+
+            Intent intent = new Intent(this, StatisticsActivity.class);
+            intent.putExtra("battleTag", battleTag);
+            startActivity(intent);
+        }
     }
 }

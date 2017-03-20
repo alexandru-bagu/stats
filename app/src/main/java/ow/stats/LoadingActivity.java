@@ -2,6 +2,8 @@ package ow.stats;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -14,6 +16,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class LoadingActivity extends AppCompatActivity {
 
@@ -46,15 +50,15 @@ public class LoadingActivity extends AppCompatActivity {
 
         if(isNetworkAvailable() && (status == CacheStatus.Unavailable || status == CacheStatus.Outdated))
         {
-                AsyncTask task = new AsyncHttpRequest("https://owapi.net/api/v3/u/" + battleTag + "/blob") {
-                    @Override
-                    protected void onPostExecute(Object o) {
-                        String json = o.toString();
-                        processOutput(battleTag, json);
-                    }
-                };
-                task.execute();
-
+            AsyncTask task = new AsyncStringRequest("https://owapi.net/api/v3/u/" + battleTag + "/blob") {
+                @Override
+                protected void onPostExecute(Object o) {
+                    String json = o.toString();
+                    processOutput(battleTag, json);
+                }
+            };
+            task.execute();
+            return;
         }
         showDetails(instance.getCache(battleTag));
     }
@@ -64,20 +68,18 @@ public class LoadingActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void processOutput(String battleTag, String json) {
+    private void processOutput(final String battleTag, final String json) {
+
+        StatsProvider instance = StatsProvider.getInstance();
+
         if(json == "") {
             showToast("Cannot get data from the internet. Please try again later.");
             finish();
             return;
         }
 
-        JSONObject data = null;
-        StatsProvider instance = StatsProvider.getInstance();
-        try {
-            data = new JSONObject(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        final JSONObject data = getJSONObject(json);
+
 
         if(data == null) {
             showToast("Cannot get data from the internet. Please try again later.");
@@ -101,15 +103,53 @@ public class LoadingActivity extends AppCompatActivity {
             }
         }
 
+        String avatar = instance.getAvatar(data);
+
+        try {
+            URL url = new URL(avatar);
+            url.toURI();
 
 
-        Cache cache = instance.generateCache(battleTag, json, data);
+            AsyncTask task = new AsyncBitmapRequest(avatar) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    Bitmap bmp = (Bitmap)o;
+                    processAvatar(battleTag, json, data, bmp);
+                }
+            };
+            task.execute();
+            return;
+
+        } catch (MalformedURLException e) {
+            Log.d("test", e.toString());
+
+        } catch (URISyntaxException e) {
+            Log.d("test", e.toString());
+        }
+
+        Cache cache = instance.generateCache(battleTag, json, data, null);
+        instance.saveCache(cache);
+        showDetails(cache);
+    }
+
+    public JSONObject getJSONObject(String json) {
+        try {
+            return new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void processAvatar(String battleTag, String json, JSONObject data, Bitmap avatar) {
+        StatsProvider instance = StatsProvider.getInstance();
+        Cache cache = instance.generateCache(battleTag, json, data, avatar);
+        instance.saveCache(cache);
         showDetails(cache);
     }
 
     private void showDetails(Cache cache) {
-
+        setResult(1, getIntent());
+        finish();
     }
-
-
 }

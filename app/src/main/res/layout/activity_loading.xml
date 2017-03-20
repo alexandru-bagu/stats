@@ -6,43 +6,61 @@
     android:layout_height="match_parent"
     tools:context="ow.stats.LoadingActivity">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <FrameLayout
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:background="@drawable/search_background"
-        android:gravity="bottom|center"
-        android:weightSum="2"
-        android:id="@+id/ow_main_layout">
+        android:layout_width="fill_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LOADING"
-            android:textSize="25dp"
-            android:background="#00000000"
-            android:textColor="@color/darkColorText2"
-            />
-
+        <ImageView
+            android:id="@+id/ow_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:maxHeight="0dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:src="@drawable/search_background" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:gravity="bottom|center"
+            android:weightSum="2"
+            android:id="@+id/ow_main_layout"
             android:background="#00000000"
-            android:id="@+id/ow_secondary_layout">
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="0dp">
 
-
-            <ProgressBar
-                android:id="@+id/ow_progressBar"
-                style="?android:attr/progressBarStyle"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#00000000" />
+                android:text="@string/loading"
+                android:textSize="25sp"
+                android:background="#00000000"
+                android:textColor="@color/darkColorText2"
+                />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center"
+                android:background="#00000000"
+                android:id="@+id/ow_secondary_layout">
+
+
+                <ProgressBar
+                    android:id="@+id/ow_progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000" />
+
+            </LinearLayout>
 
         </LinearLayout>
+    </FrameLayout>
 
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

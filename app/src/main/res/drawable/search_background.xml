@@ -2,5 +2,5 @@
 <bitmap
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@mipmap/search_background"
-    android:gravity="center"
+    android:gravity="center|bottom|clip_vertical"
     />

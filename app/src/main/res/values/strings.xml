@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Overwatch Statistics</string>
     <string name="title_activity_statistics">StatisticsActivity</string>
+    <string name="battle_net_tag">BATTLE.NET TAG</string>
+    <string name="search">Search</string>
+    <string name="loading">LOADING</string>
 </resources>

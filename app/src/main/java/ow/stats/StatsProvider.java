@@ -1,8 +1,13 @@
 package ow.stats;
 
+import android.graphics.Bitmap;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class StatsProvider {
@@ -28,14 +33,22 @@ public class StatsProvider {
         _storage = storage;
     }
 
+    public void saveCache(Cache cache) {
+        _storage.saveCache(cache);
+    }
+
     public Cache getCache(String battleTag) {
         Cache cache = _storage.getCache(battleTag);
         return cache;
     }
 
-    public Cache generateCache(String battleTag, String blob, JSONObject data) {
+    public Cache generateCache(String battleTag, String blob, JSONObject data, Bitmap avatar) {
         Cache cache = new Cache(battleTag);
-        //cache.setData(blob, )
+        try {
+            cache.setData(blob, avatar);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         _storage.saveCache(cache);
         return cache;
     }
@@ -56,8 +69,46 @@ public class StatsProvider {
         }
     }
 
-    public String getAvailableRegions(Cache cache) {
-        return "";
+    public List<String> getAvailableRegions(JSONObject json) {
+        List<String> list = new ArrayList<String>();
+
+        try {
+            if(json.has("kr") && (json.getString("kr") != "null"))
+                list.add("kr");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if(json.has("eu") && (json.getString("eu") != "null"))
+                list.add("eu");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if(json.has("us") && (json.getString("us") != "null"))
+                list.add("us");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
+    public String getAvatar(JSONObject json) {
+
+        for(String region : getAvailableRegions(json)) {
+            try {
+                JSONObject obj = json.getJSONObject(region);
+                obj = obj.getJSONObject("stats");
+                obj = obj.getJSONObject("quickplay");
+                obj = obj.getJSONObject("overall_stats");
+                return obj.getString("avatar");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
+    }
 }

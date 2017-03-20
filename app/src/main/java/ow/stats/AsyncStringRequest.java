@@ -10,11 +10,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class AsyncHttpRequest extends AsyncTask {
+public class AsyncStringRequest extends AsyncTask {
     private URL _url;
     private Boolean _urlIsValid;
 
-    public AsyncHttpRequest(String url) {
+    public AsyncStringRequest(String url) {
         try {
             _url = new URL(url);
             _urlIsValid = true;

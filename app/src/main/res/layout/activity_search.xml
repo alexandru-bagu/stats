@@ -6,51 +6,68 @@
     android:layout_height="match_parent"
     tools:context="ow.stats.SearchActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:background="@drawable/search_background"
-        android:gravity="bottom|center"
-        android:weightSum="2"
-        android:id="@+id/ow_main_layout">
+        android:layout_height="fill_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BATTLE.NET TAG"
-            android:textSize="25dp"
-            android:background="#00000000"
-            android:textColor="@color/darkColorText2"
-            />
+        <ImageView
+            android:id="@+id/ow_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:maxHeight="0dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:src="@drawable/search_background" />
+
+
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:gravity="center"
-            android:background="#00000000"
-            android:id="@+id/ow_secondary_layout">
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:gravity="bottom|center"
+            android:weightSum="2"
+            android:id="@+id/ow_main_layout"
+            android:background="#00000000">
 
-            <EditText
-                android:id="@+id/ow_battletag"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:ems="10"
-                android:inputType="text"
-                android:text=""
-                android:backgroundTint="@color/darkColorAccent"
-                android:textColor="@color/darkColorText"
+                android:text="@string/battle_net_tag"
+                android:textSize="25sp"
+                android:background="#00000000"
+                android:textColor="@color/darkColorText2"
                 />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center"
+                android:background="#00000000"
+                android:id="@+id/ow_secondary_layout">
+
+                <EditText
+                    android:id="@+id/ow_battletag"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text=""
+                    android:backgroundTint="@color/darkColorAccent"
+                    android:textColor="@color/darkColorText"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/ow_search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="@string/search"/>
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/ow_search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Search"/>
-
-    </LinearLayout>
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

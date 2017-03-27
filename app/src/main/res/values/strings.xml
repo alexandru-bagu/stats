@@ -4,4 +4,6 @@
     <string name="battle_net_tag">BATTLE.NET TAG</string>
     <string name="search">Search</string>
     <string name="loading">LOADING</string>
+    <string name="game_type">Game type</string>
+    <string name="region">Region</string>
 </resources>

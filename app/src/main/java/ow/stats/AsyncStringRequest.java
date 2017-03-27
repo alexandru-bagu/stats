@@ -25,7 +25,7 @@ public class AsyncStringRequest extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] params) {
-        if(!_urlIsValid) return "";
+        if (!_urlIsValid) return "";
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) _url.openConnection();
@@ -34,12 +34,15 @@ public class AsyncStringRequest extends AsyncTask {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuffer buffer = new StringBuffer();
                 String line;
-                while((line = reader.readLine()) != null)
+                while ((line = reader.readLine()) != null)
                     buffer.append(line);
                 return buffer.toString();
+            } else if (code == 404) {
+                return "{\"msg\": \"profile not found\", \"error\": 404}";
             }
         } catch (IOException e) {
-        }  finally {
+            e.printStackTrace();
+        } finally {
             connection.disconnect();
         }
         return "";

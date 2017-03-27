@@ -17,6 +17,8 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Database.initInstance(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 

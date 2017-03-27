@@ -3,7 +3,6 @@ package ow.stats;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -114,7 +113,7 @@ public class LoadingActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(Object o) {
                     Bitmap bmp = (Bitmap)o;
-                    processAvatar(battleTag, json, data, bmp);
+                    processAvatar(battleTag, json, bmp);
                 }
             };
             task.execute();
@@ -127,7 +126,7 @@ public class LoadingActivity extends AppCompatActivity {
             Log.d("test", e.toString());
         }
 
-        Cache cache = instance.generateCache(battleTag, json, data, null);
+        Cache cache = instance.generateCache(battleTag, json, null);
         instance.saveCache(cache);
         showDetails(cache);
     }
@@ -141,9 +140,9 @@ public class LoadingActivity extends AppCompatActivity {
         return null;
     }
 
-    private void processAvatar(String battleTag, String json, JSONObject data, Bitmap avatar) {
+    private void processAvatar(String battleTag, String json, Bitmap avatar) {
         StatsProvider instance = StatsProvider.getInstance();
-        Cache cache = instance.generateCache(battleTag, json, data, avatar);
+        Cache cache = instance.generateCache(battleTag, json, avatar);
         instance.saveCache(cache);
         showDetails(cache);
     }

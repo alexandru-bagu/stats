@@ -42,13 +42,9 @@ public class StatsProvider {
         return cache;
     }
 
-    public Cache generateCache(String battleTag, String blob, JSONObject data, Bitmap avatar) {
+    public Cache generateCache(String battleTag, String blob, Bitmap avatar) {
         Cache cache = new Cache(battleTag);
-        try {
-            cache.setData(blob, avatar);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        cache.setData(blob, avatar);
         _storage.saveCache(cache);
         return cache;
     }

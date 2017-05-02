@@ -115,6 +115,14 @@ public class StatisticsActivity extends AppCompatActivity {
         return list;
     }
 
+    private String getString(JSONObject obj, String key) {
+        try {
+            return obj.getString(key);
+        } catch (JSONException e) {
+            return "0";
+        }
+    }
+
     private void showStats() {
         try {
             if (_regions.size() > 0) {
@@ -123,21 +131,21 @@ public class StatisticsActivity extends AppCompatActivity {
                 JSONObject type = obj.getJSONObject(_type);
                 obj = type.getJSONObject("overall_stats");
 
-                String tier = obj.getString("tier");
-                String games = obj.getString("games");
-                String win_rate = obj.getString("win_rate");
-                String level = obj.getString("level");
-                String prestige = obj.getString("prestige");
-                String losses = obj.getString("losses");
-                String wins = obj.getString("wins");
+                String tier = getString(obj, "tier");
+                String games = getString(obj, "games");
+                String win_rate = getString(obj, "win_rate");
+                String level = getString(obj, "level");
+                String prestige = getString(obj, "prestige");
+                String losses = getString(obj, "losses");
+                String wins = getString(obj, "wins");
 
                 obj = type.getJSONObject("game_stats");
-                String medals = obj.getString("medals");
-                String goldMedals = obj.getString("medals_gold");
-                String silverMedals = obj.getString("medals_silver");
-                String deaths = obj.getString("deaths");
-                String kills = obj.getString("solo_kills");
-                String killStreak = obj.getString("kill_streak_best");
+                String medals = getString(obj, "medals");
+                String goldMedals = getString(obj, "medals_gold");
+                String silverMedals = getString(obj, "medals_silver");
+                String deaths = getString(obj, "deaths");
+                String kills = getString(obj, "solo_kills");
+                String killStreak = getString(obj, "kill_streak_best");
 
                 ArrayList<String> info = new ArrayList<String>();
                 info.add("Level: " + String.valueOf(Integer.valueOf(level) + Integer.valueOf(prestige) * 100));
